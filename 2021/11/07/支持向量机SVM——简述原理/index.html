@@ -28,7 +28,7 @@
 <meta property="og:description" content="写在前面 接触机器学习有好几年了，期间干了一阵子的大数据，最近想要捡起来也蛮不容易的。想着在自己的博客上把学到的一些知识记录下来，也算是复习巩固了。 \(Support{\,}Vector{\,}Machine\)（支持向量机）是机器学习中的算法。 线性模型 假定在一个平面内，能够用一条直线将正负样本分开，那么就称为线性可分（\(Liner{\,} Sepratable\)）。否则就是线性不可分。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-11-07T13:04:53.000Z">
-<meta property="article:modified_time" content="2022-01-10T12:38:51.692Z">
+<meta property="article:modified_time" content="2022-01-11T15:07:57.869Z">
 <meta property="article:author" content="一口羊宝wu">
 <meta property="article:tag" content="机器学习 手推算法 学习笔记">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-10 20:38:51" itemprop="dateModified" datetime="2022-01-10T20:38:51+08:00">2022-01-10</time>
+                <time title="Modified: 2022-01-11 23:07:57" itemprop="dateModified" datetime="2022-01-11T23:07:57+08:00">2022-01-11</time>
               </span>
 
           
@@ -309,10 +309,16 @@
 <p><span class="math inline">\(\frac{\partial L}{\partial b} = 0 \Rightarrow -\sum_{i=1}^N\alpha_iy_i=0 \Rightarrow \sum_{i=1}^N\alpha_iy_i = 0\)</span></p>
 <p>代入<span class="math inline">\(\theta(\alpha, \beta) = L(\omega_i,\xi_i,b)\)</span>中，</p>
 <p>化简： <span class="math inline">\(\theta(\alpha, \beta) = \sum_{i=1}^N\alpha_i-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
-<p>由<span class="math inline">\(\frac{1}{2}||\omega||^2 = \frac{1}{2}\omega^T\omega \\= \frac{1}{2}(\sum_{i=1}^N\alpha_iy_i\varphi(x_i))^T(\sum_{j=1}^N\alpha_jy_j\varphi(x_j)) \\= \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\varphi(x_i)^T\varphi(x_j) \\ =\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<p>由<span class="math inline">\(\frac{1}{2}||\omega||^2 = \frac{1}{2}\omega^T\omega\)</span></p>
+<p><span class="math inline">\(= \frac{1}{2}(\sum_{i=1}^N\alpha_iy_i\varphi(x_i))^T(\sum_{j=1}^N\alpha_jy_j\varphi(x_j))\)</span></p>
+<p><span class="math inline">\(= \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\varphi(x_i)^T\varphi(x_j)\)</span></p>
+<p><span class="math inline">\(=\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
 <p>这里用到了 <span class="math inline">\(K(x_i, x_j)=\varphi(x_i)^T\varphi(x_j)\)</span></p>
 <p>注意到<span class="math inline">\(K(x_i, x_j)=K(x_j, x_i)\)</span></p>
-<p><span class="math inline">\(-\sum_{i=1}^N\alpha_iy_i\omega^T\varphi(x_i) \\= -\sum_{i=1}^N\alpha_Iy_i(\sum_{j=1}^N\alpha_jy_j\varphi(x_j))^T\varphi(x_i) \\ = -\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\varphi(x_i)^T\varphi(x_j) \\ = -\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<p><span class="math inline">\(- \sum_{i=1}^N\alpha_iy_i\omega^T\varphi(x_i)\)</span></p>
+<p><span class="math inline">\(= -\sum_{i=1}^N\alpha_Iy_i(\sum_{j=1}^N\alpha_jy_j\varphi(x_j))^T\varphi(x_i)\)</span></p>
+<p><span class="math inline">\(= -\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\varphi(x_i)^T\varphi(x_j)\)</span></p>
+<p><span class="math inline">\(= -\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
 <h3 id="结论">结论</h3>
 <p>最大化：<span class="math inline">\(\theta(\alpha, \beta) = \sum_{i=1}^N\alpha_i - \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
 <p>限制条件：<span class="math inline">\(\left\{\begin{matrix}\ 0 \leq \alpha_i \leq c \\ \sum_{i=1}^N\alpha_iy_i=0 \end{matrix}\right.\)</span></p>
@@ -442,7 +448,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

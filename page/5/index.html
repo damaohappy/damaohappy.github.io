@@ -145,6 +145,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2019/04/24/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BB%BA%E7%AB%8B%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%8A%E9%80%86%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一口羊宝wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小羊的算法笔记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/24/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BB%BA%E7%AB%8B%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%8A%E9%80%86%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">字符串建立二叉树及逆过程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-24 18:03:42" itemprop="dateCreated datePublished" datetime="2019-04-24T18:03:42+08:00">2019-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-15 19:46:02" itemprop="dateModified" datetime="2020-01-15T19:46:02+08:00">2020-01-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>题目来源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree/">Leetcode-297.Serialize and Deserialize Binary Tree</a></p>
+<p>题目难度：<strong>Hard</strong></p>
+<p>题目大意：通过字符串建立一颗二叉树，以及将二叉树还原为字符串</p>
+<p>字符串示例：<code>"[1,2,3,null,null,4,5]"</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Codec</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">str2int</span><span class="params">(string str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(str[<span class="number">0</span>] == <span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; str.<span class="built_in">size</span>(); ++ i)&#123;</span><br><span class="line">                res = <span class="number">10</span> * res + (str[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            res *= <span class="number">-1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.<span class="built_in">size</span>(); ++ i)&#123;</span><br><span class="line">                res = <span class="number">10</span> * res + (str[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">split</span><span class="params">(string &amp;str, <span class="keyword">char</span> ch)</span></span>&#123;</span><br><span class="line">        vector&lt;string&gt; res;</span><br><span class="line">        string tmp;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;s: str)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s != ch)&#123;</span><br><span class="line">                tmp += s;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">                tmp.<span class="built_in">clear</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!tmp.<span class="built_in">empty</span>())</span><br><span class="line">            res.<span class="built_in">push_back</span>(tmp);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Encodes a tree to a single string.</span></span><br><span class="line">    <span class="function">string <span class="title">serialize</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        string null = <span class="string">&quot;null&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;[&quot;</span> + null + <span class="string">&quot;]&quot;</span>;</span><br><span class="line">        string res;</span><br><span class="line">        vector&lt;string&gt; r;</span><br><span class="line">        queue&lt;TreeNode*&gt; que;</span><br><span class="line">        que.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">while</span>(!que.<span class="built_in">empty</span>())&#123;</span><br><span class="line">            queue&lt;TreeNode*&gt; p;</span><br><span class="line">            <span class="keyword">while</span>(!que.<span class="built_in">empty</span>())&#123;</span><br><span class="line">                <span class="keyword">auto</span> top = que.<span class="built_in">front</span>();</span><br><span class="line">                que.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">if</span>(top)&#123;</span><br><span class="line">                    r.<span class="built_in">push_back</span>(<span class="built_in">to_string</span>(top-&gt;val));</span><br><span class="line">                    p.<span class="built_in">push</span>(top-&gt;left);</span><br><span class="line">                    p.<span class="built_in">push</span>(top-&gt;right);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    r.<span class="built_in">push_back</span>(null);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span>(!p.<span class="built_in">empty</span>())&#123;</span><br><span class="line">                que.<span class="built_in">push</span>(p.<span class="built_in">front</span>());</span><br><span class="line">                p.<span class="built_in">pop</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        res += <span class="string">&quot;[&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; r.<span class="built_in">size</span>(); ++ i)&#123;</span><br><span class="line">            res += r[i];</span><br><span class="line">            <span class="keyword">if</span>(i &lt; r.<span class="built_in">size</span>() - <span class="number">1</span>)</span><br><span class="line">                res += <span class="string">&quot;,&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        res += <span class="string">&quot;]&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decodes your encoded data to tree.</span></span><br><span class="line">    <span class="function">TreeNode* <span class="title">deserialize</span><span class="params">(string data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(data.<span class="built_in">empty</span>() || data == <span class="string">&quot;[null]&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="function">string <span class="title">str</span><span class="params">(data.begin() + <span class="number">1</span>, data.end() - <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">auto</span> arr = <span class="built_in">split</span>(str, <span class="string">&#x27;,&#x27;</span>);</span><br><span class="line">        <span class="keyword">size_t</span> size = arr.<span class="built_in">size</span>();</span><br><span class="line">        TreeNode * root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(<span class="built_in">str2int</span>(arr[<span class="number">0</span>]));</span><br><span class="line">        queue&lt;TreeNode*&gt; que;</span><br><span class="line">        que.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">1</span>; i &lt; size;)&#123;</span><br><span class="line">            <span class="keyword">auto</span> top = que.<span class="built_in">front</span>();</span><br><span class="line">            que.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span>(top)&#123;</span><br><span class="line">                <span class="keyword">if</span>(arr[i] != <span class="string">&quot;null&quot;</span>)</span><br><span class="line">                    top-&gt;left = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(<span class="built_in">str2int</span>(arr[i]));</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    top-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">                ++ i;</span><br><span class="line">                <span class="keyword">if</span>(i &lt; size)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(arr[i] != <span class="string">&quot;null&quot;</span>)</span><br><span class="line">                        top-&gt;right = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(<span class="built_in">str2int</span>(arr[i]));</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        top-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">                    ++ i;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(top-&gt;left)</span><br><span class="line">                    que.<span class="built_in">push</span>(top-&gt;left);</span><br><span class="line">                <span class="keyword">if</span>(top-&gt;right)</span><br><span class="line">                    que.<span class="built_in">push</span>(top-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>LeetCode中关于二叉树的题的确是以这种方式读入的。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/04/24/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BB%BA%E7%AB%8B%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%8A%E9%80%86%E8%BF%87%E7%A8%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2019/04/23/vector%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%AD%E5%88%A0%E9%99%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -760,7 +838,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
