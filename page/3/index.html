@@ -145,6 +145,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2020/02/05/%E5%9F%BA%E4%BA%8EKeras%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E7%BB%8F%E5%85%B8CNN%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一口羊宝wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小羊的算法笔记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/05/%E5%9F%BA%E4%BA%8EKeras%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E7%BB%8F%E5%85%B8CNN%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">基于Keras框架实现经典CNN网络</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-05 22:08:08" itemprop="dateCreated datePublished" datetime="2020-02-05T22:08:08+08:00">2020-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-06 09:29:46" itemprop="dateModified" datetime="2020-02-06T09:29:46+08:00">2020-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>数据集：Cifar-10</p>
+<h1 id="准备工作">准备工作</h1>
+<h2 id="库文件">库文件</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> _pickle <span class="keyword">as</span> cPickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential, Model</span><br><span class="line"><span class="keyword">from</span> keras.regularizers <span class="keyword">import</span> l2</span><br><span class="line"><span class="keyword">from</span> keras.layers.pooling <span class="keyword">import</span> GlobalAveragePooling2D, GlobalMaxPooling2D</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense,Conv2D, MaxPooling2D,Dropout, BatchNormalization, Activation, Input, AveragePooling2D</span><br><span class="line"><span class="keyword">from</span> keras.preprocessing.image <span class="keyword">import</span> ImageDataGenerator</span><br><span class="line"><span class="keyword">from</span> keras.layers.core <span class="keyword">import</span> Flatten</span><br><span class="line"><span class="keyword">from</span> keras.optimizers <span class="keyword">import</span> Adam</span><br><span class="line"><span class="keyword">from</span> keras.initializers <span class="keyword">import</span> glorot_uniform</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
+<h2 id="数据集处理">数据集处理</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span>(<span class="params">filename</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;加载数据集&quot;&quot;&quot;</span></span><br><span class="line">    f = <span class="built_in">open</span>(filename, <span class="string">&quot;rb&quot;</span>)</span><br><span class="line">    data = cPickle.load(<span class="built_in">open</span>(filename, <span class="string">&quot;rb&quot;</span>), encoding=<span class="string">&#x27;iso-8859-1&#x27;</span>)</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="keyword">return</span> data[<span class="string">&#x27;data&#x27;</span>], data[<span class="string">&#x27;labels&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CifarData</span>:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;加载数据集</span></span><br><span class="line"><span class="string">       对数据集进行初步处理</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, filenames, need_shuffle</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;载入数据集&quot;&quot;&quot;</span></span><br><span class="line">        all_data = []</span><br><span class="line">        all_labels = []</span><br><span class="line">        <span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">            data, labels = load_data(filename)</span><br><span class="line">            <span class="keyword">for</span> item, label <span class="keyword">in</span> <span class="built_in">zip</span>(data, labels):</span><br><span class="line"><span class="comment">#                 if label in [0, 1]:</span></span><br><span class="line">                item = np.reshape(item, [-<span class="number">1</span>, <span class="number">3</span>, <span class="number">32</span>, <span class="number">32</span>])</span><br><span class="line">                item = np.transpose(item, (<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>))</span><br><span class="line">                all_data.append(item)</span><br><span class="line">                all_labels.append(label)</span><br><span class="line">        self._data = np.vstack(all_data)</span><br><span class="line">        self._data = self._data <span class="comment"># 这里不做归一化</span></span><br><span class="line">        self._labels = np.hstack(all_labels)</span><br><span class="line">        <span class="built_in">print</span>(self._data.shape)</span><br><span class="line">        <span class="built_in">print</span>(self._labels.shape)</span><br><span class="line">        self._num_examples = self._data.shape[<span class="number">0</span>]</span><br><span class="line">        self._need_shuffle = need_shuffle</span><br><span class="line">        self._indicator = <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> self._need_shuffle:</span><br><span class="line">            self._shuffle_data()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_shuffle_data</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;打乱数据&quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 生成一个[0,...,n]的随机排列</span></span><br><span class="line">        p = np.random.permutation(self._num_examples)</span><br><span class="line">        self._data = self._data[p]</span><br><span class="line">        self._labels = self._labels[p]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next_batch</span>(<span class="params">self, batch_size</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;return batch_size examples as a batch</span></span><br><span class="line"><span class="string">            获取一个batch_size大小的数据</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        end_indicator = self._indicator + batch_size</span><br><span class="line">        <span class="keyword">if</span> end_indicator &gt; self._num_examples:</span><br><span class="line">            <span class="keyword">if</span> self._need_shuffle:</span><br><span class="line">                self._shuffle_data()</span><br><span class="line">                self._indicator = <span class="number">0</span></span><br><span class="line">                end_indicator = batch_size</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">raise</span> Exception(<span class="string">&quot;have no more examples&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> end_indicator &gt; self._num_examples:</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">&quot;batch size is larger than all examples&quot;</span>)</span><br><span class="line">        batch_data = self._data[self._indicator: end_indicator]</span><br><span class="line">        batch_label = self._labels[self._indicator: end_indicator]</span><br><span class="line">        self._indicator = end_indicator</span><br><span class="line">        <span class="keyword">return</span> batch_data, batch_label</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_all</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;获取全部数据&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self._data, self._labels</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">CIFAR_DIR = <span class="string">&quot;./cifar10/&quot;</span></span><br><span class="line">train_filenames = [os.path.join(CIFAR_DIR, <span class="string">&#x27;data_batch_%d&#x27;</span> % i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>)]</span><br><span class="line">test_filenames = [os.path.join(CIFAR_DIR, <span class="string">&#x27;test_batch&#x27;</span>)]</span><br><span class="line"></span><br><span class="line">train_data = CifarData(train_filenames, <span class="literal">True</span>)</span><br><span class="line">test_data = CifarData(test_filenames, <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取数据</span></span><br><span class="line">X_train, y_train = train_data.get_all()</span><br><span class="line">X_test, y_test = test_data.get_all()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标签one-hot编码</span></span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> np_utils</span><br><span class="line">y_train_one_hot = np_utils.to_categorical(y_train)</span><br><span class="line">y_test_one_hot = np_utils.to_categorical(y_test)</span><br><span class="line"><span class="built_in">print</span>(y_train_one_hot.shape)</span><br><span class="line"><span class="built_in">print</span>(y_test_one_hot.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 归一化</span></span><br><span class="line">X_train_normalize = X_train.astype(<span class="string">&#x27;float32&#x27;</span>) / <span class="number">255.0</span></span><br><span class="line">X_test_normalize = X_test.astype(<span class="string">&#x27;float32&#x27;</span>) / <span class="number">255.0</span></span><br></pre></td></tr></table></figure>
+<h1 id="搭建网络">搭建网络</h1>
+<p>在keras中搭建网络有两种方法，一种是Sequential，另一种是函数式（用于搭建Resnet比较方便）。这里就使用Sequential。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/05/%E5%9F%BA%E4%BA%8EKeras%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E7%BB%8F%E5%85%B8CNN%E7%BD%91%E7%BB%9C/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2020/01/21/%E6%A0%88stack%E7%9A%84%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -840,90 +921,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2020/01/19/map%E7%9A%84%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一口羊宝wu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小羊的算法笔记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/19/map%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">map的使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-19 10:15:50" itemprop="dateCreated datePublished" datetime="2020-01-19T10:15:50+08:00">2020-01-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-20 08:31:54" itemprop="dateModified" datetime="2020-01-20T08:31:54+08:00">2020-01-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>题目来源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/intersection-of-two-arrays-ii/">Leetcode-350.Intersection of Two Arrays II</a></p>
-<p>题目难度：Easy</p>
-<p>题目描述：Given two arrays, write a function to compute their intersection.</p>
-<p>样例1:</p>
-<p><strong>Input:</strong> nums1 = [1,2,2,1], nums2 = [2,2] <strong>Output:</strong> [2,2]</p>
-<p>样例2:</p>
-<p><strong>Input:</strong> nums1 = [4,9,5], nums2 = [9,4,9,8,4] <strong>Output:</strong> [4,9]</p>
-<p><strong>Note</strong>:</p>
-<ul>
-<li>Each element in the result should appear as many times as it shows in both arrays.</li>
-<li>The result can be in any order.</li>
-</ul>
-<p>题目大意：返回nums1和nums2的交集，值相同的元素也分开统计。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/01/19/map%E7%9A%84%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -993,7 +990,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

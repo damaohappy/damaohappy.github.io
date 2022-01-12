@@ -301,6 +301,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2022/01/03/LeetCode274%E5%91%A8%E8%B5%9B%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一口羊宝wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小羊的算法笔记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/03/LeetCode274%E5%91%A8%E8%B5%9B%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">LeetCode274周赛总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-03 21:16:17" itemprop="dateCreated datePublished" datetime="2022-01-03T21:16:17+08:00">2022-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-12 23:13:38" itemprop="dateModified" datetime="2022-01-12T23:13:38+08:00">2022-01-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>开新坑～这是今年参加的第一场LeetCode周赛。</p>
+<p>已经很久没有在LeetCode上写题了，突然打比赛有点不适应。</p>
+<p>一开始很快A了前三题，快到我有点怀疑自己。最后一看第四题，果然还是菜了。</p>
+<h1 id="第一题">第一题</h1>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/check-if-all-as-appears-before-all-bs/">检查是否所有 A 都在 B 之前</a></p>
+<p>水题。考虑一个有限状态自动机，</p>
+<p>状态1:只能接受a，状态2:只能接受b。</p>
+<p>状态1<span class="math inline">\(\rightarrow\)</span>状态2的条件是碰到b。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">checkString</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.<span class="built_in">length</span>() == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">bool</span> con = s[<span class="number">0</span>] == <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; s.<span class="built_in">length</span>(); ++ i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s[i] == <span class="string">&#x27;a&#x27;</span> &amp;&amp; con) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i] == <span class="string">&#x27;b&#x27;</span> &amp;&amp; con) con = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i] == <span class="string">&#x27;a&#x27;</span> &amp;&amp; ! con) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="第二题">第二题</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/03/LeetCode274%E5%91%A8%E8%B5%9B%E6%80%BB%E7%BB%93/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2021/11/11/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%86%99Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -852,81 +933,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2020/02/09/%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一口羊宝wu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小羊的算法笔记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/09/%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">【排列】Leetcode-46.Permutations</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-02-09 11:25:52 / Modified: 11:34:06" itemprop="dateCreated datePublished" datetime="2020-02-09T11:25:52+08:00">2020-02-09</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>题目来源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/permutations/">Leetcode-46.Permutations</a></p>
-<p><strong>Microsoft</strong>；<strong>Linkedin</strong></p>
-<p>题目难度：Medium</p>
-<p>题目描述：Given a collection of <strong>distinct</strong> integers, return all possible permutations.</p>
-<p>样例：</p>
-<p><strong>Input:</strong> [1,2,3] <strong>Output:</strong> [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]</p>
-<p>题目大意：给定数组nums[]，生成该数组的全排列。</p>
-<h6 id="实现代码">实现代码：</h6>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// time: O(n^2)</span></span><br><span class="line"><span class="comment">// memory: O(n^2)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">    vector&lt;<span class="keyword">bool</span>&gt; used; <span class="comment">// 存储nums[i]是否已经在当前排列中</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">const</span> vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> index, vector&lt;<span class="keyword">int</span>&gt;&amp; p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(index == nums.<span class="built_in">size</span>())&#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(p);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!used[i])&#123;</span><br><span class="line">                p.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">                used[i] = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">dfs</span>(nums,index + <span class="number">1</span>, p);</span><br><span class="line">                <span class="comment">// 剔除该元素 下次继续使用</span></span><br><span class="line">                p.<span class="built_in">pop_back</span>();</span><br><span class="line">                used[i] = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">permute</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        res.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">if</span>(nums.<span class="built_in">empty</span>())</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; p;</span><br><span class="line">        used = vector&lt;<span class="keyword">bool</span>&gt;(nums.<span class="built_in">size</span>(),<span class="literal">false</span>);</span><br><span class="line">        <span class="built_in">dfs</span>(nums, <span class="number">0</span>, p);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<hr>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/09/%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -996,7 +1002,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
