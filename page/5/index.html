@@ -145,6 +145,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2019/05/12/DP%E6%B1%82%E8%A7%A3%E5%AD%90%E9%9B%86%E7%9A%84%E5%92%8C%E4%B8%80%E5%AE%9A%E6%97%B6%E5%92%8C%E7%9A%84%E4%B8%AA%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一口羊宝wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小羊的算法笔记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/05/12/DP%E6%B1%82%E8%A7%A3%E5%AD%90%E9%9B%86%E7%9A%84%E5%92%8C%E4%B8%80%E5%AE%9A%E6%97%B6%E5%92%8C%E7%9A%84%E4%B8%AA%E6%95%B0/" class="post-title-link" itemprop="url">DP求解子集的和一定时和的个数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-05-12 20:32:40 / Modified: 20:48:08" itemprop="dateCreated datePublished" datetime="2019-05-12T20:32:40+08:00">2019-05-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天看到一道看似用搜索的题</p>
+<p>用DFS花了1s。然而有题解只用了4ms。</p>
+<p>当然，题解不是重点，重点是题解的一个子方法。</p>
+<p>大意是要求一个集合满足和为s的子集的个数。代码如下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">subsetSum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp;nums, <span class="keyword">int</span> s)</span></span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(s + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num: nums)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = s; i &gt;= num; -- i)</span><br><span class="line"></span><br><span class="line">            dp[i] += dp[i - num];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dp[s];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回的<code>dp[s]</code>即和为s的子集个数。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/05/12/DP%E6%B1%82%E8%A7%A3%E5%AD%90%E9%9B%86%E7%9A%84%E5%92%8C%E4%B8%80%E5%AE%9A%E6%97%B6%E5%92%8C%E7%9A%84%E4%B8%AA%E6%95%B0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2019/04/25/C-%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9D%83%E9%87%8D%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -849,91 +921,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2017/10/05/%E6%9C%80%E5%88%9D%E3%81%AE%E8%B6%9F%E5%9D%91%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一口羊宝wu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小羊的算法笔记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/05/%E6%9C%80%E5%88%9D%E3%81%AE%E8%B6%9F%E5%9D%91%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">最初の趟坑记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-10-05 09:03:18" itemprop="dateCreated datePublished" datetime="2017-10-05T09:03:18+08:00">2017-10-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-22 20:09:52" itemprop="dateModified" datetime="2020-01-22T20:09:52+08:00">2020-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>前提：Github账户 ，git客户端，node.js、npm</p>
-<h1 id="github-仓库">GitHub 仓库</h1>
-<p>在Github建立一个仓库，名字是: <code>用户名.github.io</code></p>
-<p>假如你的用户名是test，那么仓库名就是: <code>test.github.io</code></p>
-<h1 id="配置ssh-key">配置SSH Key</h1>
-<p>目的是避免每次提交都输入用户名和密码。按照以下步骤在命令行中输入。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/. ssh <span class="comment">#检查本机已存在的ssh密钥</span></span><br></pre></td></tr></table></figure>
-<p>若提示“No such file or directory”或“系统找不到指定路径或文件”，则说明是首次配置。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的邮件地址&quot;</span></span><br></pre></td></tr></table></figure>
-<p>输入完成后连续键入三次回车，在用户文件夹下找到<code>.ssh\id_rsa.pub</code>，这是配置SSH时生成的文件，用文本编辑器打开，复制里面的内容。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/10/05/%E6%9C%80%E5%88%9D%E3%81%AE%E8%B6%9F%E5%9D%91%E8%AE%B0%E5%BD%95/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -999,7 +990,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -145,6 +145,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2022/01/17/LeetCode276%E5%91%A8%E8%B5%9B%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一口羊宝wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小羊的算法笔记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/17/LeetCode276%E5%91%A8%E8%B5%9B%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">LeetCode276周赛总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-01-17 17:07:19 / Modified: 17:32:19" itemprop="dateCreated datePublished" datetime="2022-01-17T17:07:19+08:00">2022-01-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2022年第四场周赛。</p>
+<h1 id="第一题">第一题</h1>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/divide-a-string-into-groups-of-size-k/">将字符串拆分为若干长度为 k 的组</a></p>
+<p>字符串分组，根据题意处理即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">divideString</span><span class="params">(string s, <span class="keyword">int</span> k, <span class="keyword">char</span> fill)</span> </span>&#123;</span><br><span class="line">        vector&lt;string&gt; res;</span><br><span class="line">        <span class="keyword">int</span> len = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="keyword">int</span> g = len / k;</span><br><span class="line">        string tmp = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(g --)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">0</span>; t &lt; k; ++ t)&#123;</span><br><span class="line">                tmp += s[i ++];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(tmp.<span class="built_in">length</span>() == k)&#123;</span><br><span class="line">                res.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">                tmp = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; len) tmp += s[i ++];</span><br><span class="line">        <span class="keyword">if</span>(tmp.<span class="built_in">length</span>() != <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(tmp.<span class="built_in">length</span>() &lt; k) tmp += fill;</span><br><span class="line">            res.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="第二题">第二题</h1>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-moves-to-reach-target-score/">得到目标值的最少行动次数</a></p>
+<p>思路：越靠近目标值，double的价值越高，因而整体操作的次数越小。</p>
+<p>可以考虑逆推，若目标值为偶数且maxDoubles不为0，则目标值/=2，若为奇数且maxDoubles不为0则自减1后/=2，记录操作数。</p>
+<p>直到maxDoubles==0时返回操作数+此时目标值-1。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/17/LeetCode276%E5%91%A8%E8%B5%9B%E6%80%BB%E7%BB%93/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2022/01/11/LeetCode275%E5%91%A8%E8%B5%9B%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -864,85 +939,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yangyangu.github.io/2020/02/09/%E5%9B%9E%E6%BA%AF%E6%B3%95%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一口羊宝wu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小羊的算法笔记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/09/%E5%9B%9E%E6%BA%AF%E6%B3%95%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">【回溯】Leetcode-200.Number of Islands</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-02-09 15:47:22 / Modified: 19:44:52" itemprop="dateCreated datePublished" datetime="2020-02-09T15:47:22+08:00">2020-02-09</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>题目来源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/number-of-islands/">Leetcode-200.Number of Islands</a></p>
-<p><strong>Google</strong>；<strong>Facebook</strong>；<strong>Microsoft</strong>；<strong>Amazon</strong>；<strong>Zenefites</strong></p>
-<p>题目难度：<strong>Medium</strong></p>
-<p>题目描述：Given a 2d grid map of <code>'1'</code>s (land) and <code>'0'</code>s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
-<p>样例：</p>
-<p><strong>Input:</strong> 11110 11010 11000 00000</p>
-<p><strong>Output:</strong> 1</p>
-<p><strong>Input:</strong> 11000 11000 00100 00011</p>
-<p><strong>Output:</strong> 3</p>
-<p>题目大意：给定一个图grid，用‘1’表示陆地，用‘0’表示水域，求出岛屿的个数。注意：岛屿是四周都是水域的陆地。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/09/%E5%9B%9E%E6%BA%AF%E6%B3%95%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1008,7 +1008,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
