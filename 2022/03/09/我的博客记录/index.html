@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar_1.JPG">
+  <link rel="icon" href="/img/avatar_1.JPG">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="一口羊宝wu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="就在刚才，我删掉了之前写的博客。  ——作者    2018年初至今，我写了大约52篇文章，大部分都是关于LeetCode题解的。有一些类型的题目我刷了很多，每一题都单独成篇，可惜自己觉得写出来的东西确实没有什么干货，干脆直接删除了。BTW，这是我的LeetCode。除了题解，我还写了一些大数据、深度学习的文章，但也都是废话。   大约在2017年，我开始断断续续学习编程。不可否认的是，教计算思维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的博客记录">
+<meta property="og:url" content="http://yangyangu.github.io/2022/03/09/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="小羊的算法笔记">
+<meta property="og:description" content="就在刚才，我删掉了之前写的博客。  ——作者    2018年初至今，我写了大约52篇文章，大部分都是关于LeetCode题解的。有一些类型的题目我刷了很多，每一题都单独成篇，可惜自己觉得写出来的东西确实没有什么干货，干脆直接删除了。BTW，这是我的LeetCode。除了题解，我还写了一些大数据、深度学习的文章，但也都是废话。   大约在2017年，我开始断断续续学习编程。不可否认的是，教计算思维">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-09T06:45:59.000Z">
+<meta property="article:modified_time" content="2022-03-09T08:15:32.657Z">
+<meta property="article:author" content="一口羊宝wu">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>我的博客记录 - 小羊的算法笔记</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yangyangu.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小羊写博客的地方</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/article_2.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="我的博客记录">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-09 14:45" pubdate>
+        2022年3月9日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      9 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">我的博客记录</h1>
+            
+            <div class="markdown-body">
+              <em>就在刚才，我删掉了之前写的博客。</em>
+<p align="right">
+——作者
+</p>
+<p>  2018年初至今，我写了大约52篇文章，大部分都是关于LeetCode题解的。有一些类型的题目我刷了很多，每一题都单独成篇，可惜自己觉得写出来的东西确实没有什么干货，干脆直接删除了。BTW，这是我的<a target="_blank" rel="noopener" href="https://leetcode-cn.com/u/yangyangu/">LeetCode</a>。除了题解，我还写了一些大数据、深度学习的文章，但也都是废话。</p>
+<p>  大约在2017年，我开始断断续续学习编程。不可否认的是，教计算思维的大学老师讲得很好，带我入了C语言的门，但是可惜，我写代码还是很艰辛。后来有一个直系学长推荐了LeetCode等众多OJ，以及我自己在很多在线学习的网站学了很长一段时间的算法、数据结构和C++（这些课程的老师好好反思自己的念PPT课堂），这里要特别感谢<a target="_blank" rel="noopener" href="https://github.com/liuyubobobo">liuyubobobo</a>老师。当然，这些都是后话了。</p>
+<p>  然后，终于可以顺利地用编程语言描述自己的想法了，写LeetCode自然是越写越顺心，哪怕是碰到Medium以上的题目，也是可以慢慢摸索出来的（<del>实在不行还有题解</del>）。</p>
+<p>  不过，再往后，LeetCode上的题目也越来越不像是面试题了，更像是算法竞赛的水题/中等题。时至今日，甚至出现了让OI退役选手都惊讶的算法题。我理解，随着求职市场内卷化程度剧增，这种情况是不可避免的。</p>
+<p>  当年的博客里，我主要完成以下类型的题目：</p>
+<ul>
+<li>回溯</li>
+<li>双指针</li>
+<li>搜索</li>
+<li>二叉树</li>
+<li>链表</li>
+<li>动态规划</li>
+<li>贪心</li>
+<li>队列</li>
+<li>数学</li>
+<li>排序</li>
+<li>二分</li>
+<li>图</li>
+</ul>
+<p>  当然，这些类型的题，如果能熟练掌握（Bug-free、最优解法、默写），无论是找工作面试还是其他算法考试，都足以应对了。哈哈，我确实还不太能做到<em>熟练掌握</em>。我承认之前写的博客都是在水文字，把题目大意、思路和代码放上去，质量真的不高。讲真，就连我自己也很少去翻之前写的东西。</p>
+<p>  有一说一，之前写的文章，放在简历里还是可以的。虽然没法唬住面试官，但是至少能增加一点对面试者的好感，至少ta会严谨的对待自己的学习，哪怕学的东西很基础。这或许是我写博客的初衷——把博客做成一个长期的简历。</p>
+<p>  未来我的想法是：把文章精简化。譬如说，在刷题的文章里，我希望能过通过一道题来解决一类题，学会这道题背后的算法思想，而不只是Accepted这一道题。在其他类型的文章里，也应该能做到类似的事情。</p>
+<p>  因此，我会把之前删掉的文章整合成质量更高的合集（<del>哈哈不是删除了嘛</del>）。希望能让自己更深入的理解其中的思想。</p>
+<p>  最近刷题的主战场在<a target="_blank" rel="noopener" href="https://www.acwing.com/">AcWing</a>，一句话：y总YYDS！目前，我希望学好以下类型的题目：</p>
+<ul>
+<li>基础数据结构模板</li>
+<li>树状数组、线段树、Trie、UnionFind、AC自动机...</li>
+<li>各种类型的DP</li>
+<li>搜索优化</li>
+<li>前缀、差分、位运算</li>
+<li>...</li>
+</ul>
+<p>  大家加油！</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/09/%E7%8C%AE%E7%BB%99%E8%87%AA%E5%B7%B1/">
+                        <span class="hidden-mobile">献给自己</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
