@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar_1.JPG">
+  <link rel="icon" href="/img/avatar_1.JPG">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="一口羊宝wu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="写在前面 \(Support{\,}Vector{\,}Machine\)（SVM,支持向量机）是机器学习中的算法，通常用于分类问题。 线性模型 假定在一个平面内，能够用一条直线将正负样本分开，那么就称为线性可分（\(Liner{\,} Sepratable\)）。否则就是线性不可分。 问题 显然有很多直线可以区分，那么如何衡量哪条直线更好？ 性能指标 1、将直线平移到一类样本的最近，得到L1 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习之SVM">
+<meta property="og:url" content="http://yangyangu.github.io/2022/03/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8BSVM/index.html">
+<meta property="og:site_name" content="小羊的算法笔记">
+<meta property="og:description" content="写在前面 \(Support{\,}Vector{\,}Machine\)（SVM,支持向量机）是机器学习中的算法，通常用于分类问题。 线性模型 假定在一个平面内，能够用一条直线将正负样本分开，那么就称为线性可分（\(Liner{\,} Sepratable\)）。否则就是线性不可分。 问题 显然有很多直线可以区分，那么如何衡量哪条直线更好？ 性能指标 1、将直线平移到一类样本的最近，得到L1 2">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-09T16:36:33.000Z">
+<meta property="article:modified_time" content="2022-03-09T16:53:12.071Z">
+<meta property="article:author" content="一口羊宝wu">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="SVM">
+<meta property="article:tag" content="支持向量机">
+<meta property="article:tag" content="凸优化">
+<meta property="article:tag" content="对偶问题">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>机器学习之SVM - 小羊的算法笔记</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/night-owl.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yangyangu.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小羊写博客的地方</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('http://storage.live.com/items/FCAC841A81A8B413!2217:/post_3.png?authkey=AFYfA8yxCto8Mzc') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="机器学习之SVM">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-10 00:36" pubdate>
+        2022年3月10日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      62 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">机器学习之SVM</h1>
+            
+            <div class="markdown-body">
+              <h1 id="写在前面">写在前面</h1>
+<p><span class="math inline">\(Support{\,}Vector{\,}Machine\)</span>（SVM,支持向量机）是机器学习中的算法，通常用于分类问题。</p>
+<h1 id="线性模型">线性模型</h1>
+<p>假定在一个平面内，能够用一条直线将正负样本分开，那么就称为线性可分（<span class="math inline">\(Liner{\,} Sepratable\)</span>）。否则就是线性不可分。</p>
+<h1 id="问题">问题</h1>
+<p>显然有很多直线可以区分，那么如何衡量哪条直线更好？</p>
+<h1 id="性能指标">性能指标</h1>
+<p>1、将直线平移到一类样本的最近，得到L1</p>
+<p>2、重复这一个过程移动到另一类样本最近，得到L2</p>
+<p>3、计算<span class="math inline">\(d=L1\)</span>到<span class="math inline">\(L2\)</span>的距离</p>
+<p>那么d即优化的目标，寻找L1和L2，使得d最大。</p>
+<p><span class="math inline">\(d\)</span>: 间隔（<span class="math inline">\(Margin\)</span>）</p>
+<p>将平行线碰到的向量称为支持向量（<span class="math inline">\(Support{\,}Vector\)</span>）</p>
+<p>实际上，<span class="math inline">\(L\)</span>只与少数支持向量有关，故可以用在小样本上。</p>
+<h1 id="数学描述">数学描述</h1>
+<p>【参考： 《支持向量机导论》】</p>
+<h2 id="定义">定义</h2>
+<p>1、训练数据、标签</p>
+<p><span class="math inline">\((x_i, y_i), i = 1 \cdots N\)</span></p>
+<p><span class="math inline">\(x_i\)</span>为向量， <span class="math inline">\(y_i\)</span>为标签(+1 or -1)。注：这里是一个二分类问题。</p>
+<p>2、线形模型：找到一个超平面<span class="math inline">\((\omega，b)\)</span>，满足<span class="math inline">\(\omega^TX + b = 0\)</span></p>
+<p><span class="math inline">\(\omega\)</span>也是一个向量，维度与<span class="math inline">\(x_i\)</span>相等</p>
+<p>3、一个训练集线性可分是指：</p>
+<p>对于训练集{(<span class="math inline">\(x_i, y_i\)</span>)}, <span class="math inline">\(i=1\cdots N\)</span>,</p>
+<p><span class="math inline">\(\exists (\omega, b)\)</span>，使得对<span class="math inline">\(\forall i=1\cdots N\)</span>，有:</p>
+<p><span class="math inline">\(\left\{\begin{aligned} \omega^Tx_i + b \geq 0,y_i = + 1\\ \omega^Tx_i + b \leq 0,y_i = -1 \end{aligned}\right.\)</span></p>
+<p>即：<span class="math inline">\(y_i[\omega^Tx_i + b] \geq 0\)</span></p>
+<h2 id="机器学习步骤">机器学习步骤</h2>
+<h3 id="step1">Step1</h3>
+<p>限定模型。用一个方程。</p>
+<h3 id="step2">Step2</h3>
+<p>模型留出待定参数。此处为W和b</p>
+<h3 id="step3">Step3</h3>
+<p>用训练数据确定W和b的值。训练完成。</p>
+<h2 id="优化问题凸优化问题二次优化问题">优化问题（凸优化问题/二次优化问题）</h2>
+<p>最小化(Minimize): <span class="math inline">\(\frac{1}{2} ||\omega||^2\)</span></p>
+<p>限制条件(Subject to): <span class="math inline">\(y_i[\omega^Tx_i + b] \geq 1, i=1\cdots N\)</span></p>
+<h2 id="注意到如下两个事实">注意到如下两个事实：</h2>
+<h3 id="事实1">事实1:</h3>
+<p><span class="math inline">\(\omega^Tx + b = 0\)</span>与<span class="math inline">\(a\omega^Tx + b = 0\)</span>是同一个平面。<span class="math inline">\(a\in R^+\)</span>。</p>
+<p>若<span class="math inline">\((\omega, b)\)</span>满足公式一，则<span class="math inline">\((a\omega, ab)\)</span>也满足。</p>
+<h3 id="事实2">事实2:</h3>
+<p>点到平面距离公式。</p>
+<p>平面<span class="math inline">\(\omega_1x + \omega_2y + b = 0\)</span>，则<span class="math inline">\((x_0, y_0)\)</span>到平面距离<span class="math inline">\(d=\frac{|\omega_1x_0 + \omega_2y_0 + b|}{\sqrt{\omega_1^2 | \omega_2^2}}\)</span></p>
+<h2 id="推论">推论</h2>
+<p>根据事实1，可以用<span class="math inline">\(a\)</span>去放缩<span class="math inline">\((w, b)\longrightarrow(a\omega, ab)\)</span>，最终使得在支持向量<span class="math inline">\(x_0\)</span>上有：</p>
+<p><span class="math inline">\(|\omega^Tx_0 + b| = 1\)</span></p>
+<p>（也就是说可以通过对<span class="math inline">\((\omega, b)\)</span>进行缩放，使得<span class="math inline">\(d\)</span>的分母为1）</p>
+<p>此时支持向量与平面的距离<span class="math inline">\(d=\frac{1}{||\omega||}\)</span>（根据事实2）</p>
+<p>故<span class="math inline">\(max(d) = minimize(||\omega||)\)</span></p>
+<p>这里将最大化<span class="math inline">\(d\)</span>转化为最小化<span class="math inline">\(\omega\)</span>的模。</p>
+<p>接下来是解决优化问题。</p>
+<h1 id="二次规划quadratic-programming">二次规划(Quadratic Programming)</h1>
+<p>1、目标函数(Object Function) 二次项</p>
+<p>2、限制条件。一次项。</p>
+<p>要么无解，要么只有一个极值，且为全局最优值。（目标函数为凸函数）</p>
+<h1 id="非线性模型">非线性模型</h1>
+<h2 id="svm如何处理非线性模型">SVM如何处理非线性模型？</h2>
+<p>1、最小化 <span class="math inline">\(\frac{1}{2} ||\omega||^2 + c\sum_{i=1}^N\xi_i\)</span>（式1）</p>
+<p>这里的<span class="math inline">\(c\)</span>也是事先设定的参数，<span class="math inline">\(c\sum_{i=1}^N\xi_i\)</span>为正则项(Regulation Term)</p>
+<p>2、限制条件 <span class="math inline">\(\left\{\begin{matrix}y_i[\omega^Tx_i + b] \geq 1 - \xi_i (i=1\cdots N) \\ \xi_i \geq 0 \end{matrix}\right.\)</span></p>
+<p>3、定义高维映射<span class="math inline">\(\varphi(x)\)</span></p>
+<p>若<span class="math inline">\(x\)</span>为低维、不可分的数据，经过<span class="math inline">\(x \rightarrow \varphi(x)\)</span>， <span class="math inline">\(\varphi(x)\)</span>为高维数据，那么<span class="math inline">\(\varphi(x)\)</span>可分的概率更高。</p>
+<p>根据<span class="math inline">\(x_i = \varphi(x)\)</span>，此时限制条件可以修改为<span class="math inline">\(y_i[\omega^T\varphi(x) + b] &gt;= 1 - \xi_i\)</span></p>
+<h2 id="如何选出varphix">如何选出<span class="math inline">\(\varphi(x)\)</span>？</h2>
+<p>首先，<span class="math inline">\(\varphi(x)\)</span>是无限维。那么此时<span class="math inline">\(\varphi(x)\)</span>线性可分的概率为1。</p>
+<p>其次，我们可以不知道无限维<span class="math inline">\(\varphi(x)\)</span>的显式表达式，我们只需知道一个核函数(Kernel function):</p>
+<p><span class="math inline">\(K(x_1, x_2) = \varphi(x_1)^T\varphi(x_2)\)</span></p>
+<p>则式1的优化式仍然可解。</p>
+<h2 id="核函数">核函数</h2>
+<p>1、高斯核：<span class="math inline">\(K(x_1, x_2) = e^-\frac{||x_1 - x_2||^2}{2\sigma^2}\)</span> ，<span class="math inline">\(\varphi(x)\)</span>为无限维。</p>
+<p>2、多项式核：<span class="math inline">\(K(x_1, x_2) = (x_1^Tx_2 + 1)^d， d\)</span>为 多项式阶数，<span class="math inline">\(\varphi(x)\)</span>为有限维。</p>
+<p>如何在只知道<span class="math inline">\(K(x_1, x_2)\)</span>、不知道<span class="math inline">\(\varphi(x)\)</span>的情况下去替换？</p>
+<h2 id="优化理论">优化理论</h2>
+<h3 id="原问题prime-problem">原问题(Prime Problem)：</h3>
+<p>这是一个非常general的定义。</p>
+<p>最小化<span class="math inline">\(f(\omega)\)</span></p>
+<p>限制条件: <span class="math inline">\(\left\{\begin{matrix}g_i(\omega) \leq 0, i=1\cdots K (K个不等式定义) \\ h_i(\omega) = 0，i=1\cdots M (M个不等式定义)\end{matrix}\right.\)</span></p>
+<hr />
+<h3 id="对偶问题dual-problem">对偶问题(Dual Problem):</h3>
+<p>1、定义：</p>
+<p><span class="math inline">\(L(\omega, \alpha, \beta) = f(\omega) + \sum_{i=1}^K\alpha_ig_i(\omega)+\sum_{i=1}^M\beta_ih_i(\omega) \\=f(\omega) + \alpha^Tg(\omega) + \beta^Th(\omega)\)</span> (向量形式)</p>
+<p>2、对偶问题定义：</p>
+<p>最大化：<span class="math inline">\(\theta(\alpha, \beta) = inf\left\{\begin{matrix}L(\omega, \alpha,\beta)\end{matrix}\right\}\)</span></p>
+<p><span class="math inline">\(inf\)</span>为求最小值，限制<span class="math inline">\(\alpha和\beta\)</span>，遍历所有<span class="math inline">\(\omega\)</span>，使得<span class="math inline">\(L\)</span>最小，取最小的<span class="math inline">\(L\)</span>时的<span class="math inline">\(\omega\)</span>。</p>
+<p>限制条件： <span class="math inline">\(\alpha_i \geq 0(i=1\cdots K)\)</span> 或 <span class="math inline">\(\alpha \geq 0\)</span>（向量的每一个分量都大于或等于0）</p>
+<p>定义：<span class="math inline">\(G=f(\omega^*) - \theta(\alpha^*, \beta^*) \geq 0\)</span>，<span class="math inline">\(G\)</span>为原问题与对偶问题的间距(Duality Gap)。 （对于某些问题，可以证明<span class="math inline">\(G=0\)</span>）</p>
+<h3 id="强对偶定理">强对偶定理</h3>
+<p>这里不加证明地给出强对偶定理。</p>
+<p>若<span class="math inline">\(f(\omega)\)</span>为凸函数，且<span class="math inline">\(g(\omega)=A\omega+b, h(\omega) = c\omega + d\)</span>，则此优化问题的原问题与对偶问题的<span class="math inline">\(G=0\)</span>。</p>
+<p>即：<span class="math inline">\(f(\omega^x) = \theta(\alpha^x, \beta^*)\)</span>（意味着上面的证明中有两处需要取等号）</p>
+<p>对 <span class="math inline">\(\forall i = 1\cdots K\)</span>(KKT条件),</p>
+<p><span class="math inline">\(\left\{\begin{matrix}\ 或者 \alpha^*_i = 0 \\ 或者 g_i^*(\omega^*) = 0\end{matrix}\right.\)</span></p>
+<h3 id="引入svm非线性模型">引入SVM非线性模型</h3>
+<h4 id="优化目标">优化目标</h4>
+<p>最小化 <span class="math inline">\(\frac{1}{2}||\omega||^2 + c\sum_{i=1}^N\xi_i\)</span>（首先这是一个凸函数）</p>
+<p>限制条件：<span class="math inline">\(\left\{\begin{matrix}\ y_i[\omega^T\varphi(x)+b] \geq 1 - \xi_i \\ \xi_i \geq 0\end{matrix}\right.\)</span></p>
+<h4 id="标准形式">标准形式</h4>
+<p><span class="math inline">\(minimize: \frac{1}{2}||\omega||^2 - c\sum_{i=1}^N\xi_i\)</span></p>
+<p><span class="math inline">\(subject{\,}to :\left\{\begin{matrix}\ 1+\xi_i-y_i\omega^T\varphi(x_i) - y_ib \leq 0 \\ \xi_i \leq 0 (i=1\cdots N)\end{matrix}\right.\)</span></p>
+<h4 id="对偶问题">对偶问题</h4>
+<p><span class="math inline">\(maximum: \theta(\alpha, \beta) = inf\left\{\begin{matrix}\frac{1}{2}||\omega||^2-c\sum_{i=1}^N\xi_i + \sum_{i=1}^N\beta_i\xi_i + \sum_{i=1}^N\alpha_i[1+\xi_i-y_i\omega^T\varphi(x_i)-y_ib]\end{matrix}\right\}\)</span>,对所有的<span class="math inline">\((\omega_i, \xi_i, \beta_i)\)</span></p>
+<h4 id="补充">补充</h4>
+<p>1、<span class="math inline">\(\omega\)</span>为一个向量，<span class="math inline">\(\omega=(\omega_1, \omega_2, \cdots, \omega_m)^T, f(\omega)\)</span>为一个数</p>
+<p><span class="math inline">\(\frac{\partial f}{\partial \omega} = (\frac{\partial f}{\partial \omega_1}, \frac{\partial f}{\partial \omega_2}, \cdots, \frac{\partial f}{\partial \omega_m})^T\)</span></p>
+<p>2、若<span class="math inline">\(f(\omega)=\frac{1}{2}||\omega||^2\)</span>， 则<span class="math inline">\(\frac{\partial f}{\partial \omega} = \omega\)</span></p>
+<p>3、若<span class="math inline">\(f(\omega)=\omega^Tx\)</span>, 则<span class="math inline">\(\frac{\partial f}{\partial \omega} = x\)</span></p>
+<h4 id="求解">求解</h4>
+<p><span class="math inline">\(\frac{\partial L}{\partial \omega} = 0 \Rightarrow \omega-\sum_{i=1}^N\alpha_iy_i\varphi(x_i) = 0(用补充1) \Rightarrow \omega = \sum_{i=1}^N\alpha_iy_i\varphi(x_i)\)</span></p>
+<p><span class="math inline">\(\frac{\partial L}{\partial \xi_i} = 0 \Rightarrow -c+\beta_i + \alpha_i = 0 \Rightarrow \alpha_i + \beta_i = c\)</span></p>
+<p><span class="math inline">\(\frac{\partial L}{\partial b} = 0 \Rightarrow -\sum_{i=1}^N\alpha_iy_i=0 \Rightarrow \sum_{i=1}^N\alpha_iy_i = 0\)</span></p>
+<p>代入<span class="math inline">\(\theta(\alpha, \beta) = L(\omega_i,\xi_i,b)\)</span>中，</p>
+<p>化简： <span class="math inline">\(\theta(\alpha, \beta) = \sum_{i=1}^N\alpha_i-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<p>由<span class="math inline">\(\frac{1}{2}||\omega||^2 = \frac{1}{2}\omega^T\omega\)</span></p>
+<p><span class="math inline">\(= \frac{1}{2}(\sum_{i=1}^N\alpha_iy_i\varphi(x_i))^T(\sum_{j=1}^N\alpha_jy_j\varphi(x_j))\)</span></p>
+<p><span class="math inline">\(= \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\varphi(x_i)^T\varphi(x_j)\)</span></p>
+<p><span class="math inline">\(=\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<p>这里用到了 <span class="math inline">\(K(x_i, x_j)=\varphi(x_i)^T\varphi(x_j)\)</span></p>
+<p>注意到<span class="math inline">\(K(x_i, x_j)=K(x_j, x_i)\)</span></p>
+<p><span class="math inline">\(- \sum_{i=1}^N\alpha_iy_i\omega^T\varphi(x_i)\)</span></p>
+<p><span class="math inline">\(= -\sum_{i=1}^N\alpha_Iy_i(\sum_{j=1}^N\alpha_jy_j\varphi(x_j))^T\varphi(x_i)\)</span></p>
+<p><span class="math inline">\(= -\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\varphi(x_i)^T\varphi(x_j)\)</span></p>
+<p><span class="math inline">\(= -\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<h3 id="结论">结论</h3>
+<p>最大化：<span class="math inline">\(\theta(\alpha, \beta) = \sum_{i=1}^N\alpha_i - \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<p>限制条件：<span class="math inline">\(\left\{\begin{matrix}\ 0 \leq \alpha_i \leq c \\ \sum_{i=1}^N\alpha_iy_i=0 \end{matrix}\right.\)</span></p>
+<p><span class="math inline">\(KKT\)</span>条件：<span class="math inline">\(\forall i=1 \cdots K, \alpha_i^*=0或g_i^*(\omega^*) = 0\)</span></p>
+<p>解法：<span class="math inline">\(SMO\)</span>算法</p>
+<h3 id="参数求解">参数求解</h3>
+<p>对于测试样本<span class="math inline">\(x\)</span>，<span class="math inline">\(\left\{\begin{matrix}\ 若\omega^T\varphi(x) + b \geq 0, 则y=+1 \\ 若\omega^T\varphi(x) + b &lt; 0, 则y=-1 \end{matrix}\right.\)</span></p>
+<p>根据<span class="math inline">\(\omega^T\varphi(x) = \sum_{i=1}^N[\alpha_iy_i\varphi(x_i)]^T\varphi(x) \\ = \sum_{i=1}^N\alpha_iy_i[\varphi(x_i)]^T\varphi(x) \\ = \sum_{i=1}^N\alpha_iy_iK(x_i, x)\)</span></p>
+<p>可知，不需要知道参数<span class="math inline">\(\omega\)</span>，只需要知道<span class="math inline">\(\alpha_i和K(x, y)\)</span></p>
+<p>下面求解<span class="math inline">\(b\)</span>，根据<span class="math inline">\(KKT\)</span>条件，</p>
+<p><span class="math inline">\(\forall i = 1 \cdots N\)</span>，<span class="math inline">\(\left\{\begin{matrix}\ 要么\beta_i=0，要么\xi_i=0 \\ 要么\alpha_i=0，要么1+\xi_i - y_i\omega^T\varphi(x_i) - y_ib = 0 \end{matrix}\right.\)</span></p>
+<p>取一个<span class="math inline">\(0&lt;\alpha_i &lt; c \Rightarrow\)</span> <span class="math inline">\(\left\{\begin{matrix}\ \alpha_i \neq 0 \\ \beta_i = c - \alpha_I &gt; 0 \end{matrix}\right.\)</span> <span class="math inline">\(\Rightarrow \beta_i \neq 0 \Rightarrow \xi_i = 0\)</span></p>
+<p><span class="math inline">\(\alpha_i \neq 0 \Rightarrow 1 - y_i\omega^T\varphi(x_i) - y_ib = 0 \\ \Rightarrow b = \frac{1 - y_i\omega^T\varphi(x_i)}{y_i} = \frac{1 - y_i\sum_{j = 1}^N\alpha_jy_jK(x_i, x_j)}{y_i}\)</span></p>
+<h3 id="参考资料">参考资料：</h3>
+<p>1、《Convex Optimization》 Stephen Boyd著，即《凸优化》</p>
+<p>2、《Nonliner Programming》</p>
+<h1 id="svm算法">SVM算法</h1>
+<h2 id="训练流程">训练流程</h2>
+<p>输入<span class="math inline">\((x_i, y_i), i= 1 \cdots N\)</span></p>
+<p>解优化问题：</p>
+<p>最大化：<span class="math inline">\(\theta(\alpha) = \sum_{i=1}^N\alpha_i - \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<p>限制条件：<span class="math inline">\(\left\{\begin{matrix}\ 0 \leq \alpha_i \leq c \\ \sum_{i=1}^N\alpha_iy_i=0 \end{matrix}\right.\)</span></p>
+<p>使用<span class="math inline">\(SMO\)</span>算法求解出<span class="math inline">\(\alpha_i\)</span></p>
+<p>求解<span class="math inline">\(b\)</span>：找一个<span class="math inline">\(0 &lt; \alpha_i &lt; c\)</span>，<span class="math inline">\(b = \frac{1 - y_i\sum_{j=1}^N\alpha_jy_jK(x_i, x_j)}{y_i}\)</span></p>
+<h2 id="测试流程">测试流程</h2>
+<p>输入测试样本<span class="math inline">\(x\)</span></p>
+<p><span class="math inline">\(\left\{\begin{matrix}\ 若\sum_{i=1}^N\alpha_iy_iK(x_i, x) \geq 0, 则y=+1 \\ 若\sum_{i=1}^N\alpha_iy_iK(x_i, x) &lt; 0 则y=-1\end{matrix}\right.\)</span></p>
+<h1 id="svm-核函数">SVM 核函数</h1>
+<p><span class="math inline">\(Linear\)</span>（线性内核）：<span class="math inline">\(K(x, y) = x^Ty\)</span>（等于不用核函数）</p>
+<p><span class="math inline">\(Poly\)</span>（多项式核）：<span class="math inline">\(K(x, y) = (x^Ty + 1)^d\)</span>（可以写出<span class="math inline">\(\varphi(x)\)</span>）</p>
+<p><span class="math inline">\(Rbf\)</span>（高斯径向基函数核）：<span class="math inline">\(K(x, y) = e^-\frac{||x-y||^2}{\sigma^2}\)</span></p>
+<p><span class="math inline">\(Tanh核\)</span>：<span class="math inline">\(K(x, y) = tanh(\beta x^Ty + b), tanh=\frac{e^x - e^-x}{e^x + e^-x}\)</span></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SVM/">SVM</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">支持向量机</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/">凸优化</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98/">对偶问题</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/">
+                        <span class="hidden-mobile">动态规划简单总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
