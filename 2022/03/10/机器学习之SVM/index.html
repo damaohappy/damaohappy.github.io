@@ -24,7 +24,7 @@
 <meta property="og:description" content="写在前面   \(Support{\,}Vector{\,}Machine\)（SVM,支持向量机）是机器学习中的算法，通常用于分类问题（Classification）。 线性模型 假定在一个平面内，能够用一条直线将正负样本分开，那么就称为线性可分（\(Liner{\,} Sepratable\)）。否则就是线性不可分。 问题 显然有很多直线可以区分，那么如何衡量哪条直线更好？ 性能指标 1、将直">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-09T16:36:33.000Z">
-<meta property="article:modified_time" content="2022-03-10T03:36:01.753Z">
+<meta property="article:modified_time" content="2022-03-10T14:53:07.952Z">
 <meta property="article:author" content="一口羊宝wu">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="SVM">
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.8k 字
+      7.7k 字
     </span>
   
 
@@ -282,8 +282,8 @@
 <h2 id="svm-优化问题">SVM-&gt;优化问题</h2>
 <p>  可以通过数学证明，SVM实际上是一个优化问题（也可以说是凸优化问题或者二次优化问题，因为得到的是凸函数）</p>
 <p>  在凸优化中我们需要定义优化函数（即要最小/大化的式子），以及限制条件。如下：</p>
-<p>  最小化(Minimize): <span class="math inline">\(\frac{1}{2} ||\omega||^2\)</span></p>
-<p>  限制条件(Subject to): <span class="math inline">\(y_i[\omega^Tx_i + b] \geq 1, i=1\cdots N\)</span></p>
+<p>  最小化(min): <span class="math inline">\(\frac{1}{2} ||\omega||^2\)</span></p>
+<p>  限制条件(s.t.): <span class="math inline">\(y_i[\omega^Tx_i + b] \geq 1, i=1\cdots N\)</span></p>
 <h2 id="对svm优化问题进一步简化">对SVM优化问题进一步简化：</h2>
 <p>  首先，我们可以注意到如下两个事实：</p>
 <ul>
@@ -302,7 +302,7 @@
 <p>  <span class="math inline">\(|\omega^Tx_0 + b| = 1\)</span></p>
 <p>  也就是说可以通过对<span class="math inline">\((\omega, b)\)</span>进行缩放，使得<span class="math inline">\(d\)</span>的分母为1</p>
 <p>  此时支持向量与平面的距离<span class="math inline">\(d=\frac{1}{||\omega||}\)</span>（根据事实2）</p>
-<p>  故<span class="math inline">\(max(d) = minimize(||\omega||)\)</span></p>
+<p>  故<span class="math inline">\(max(d) = min(||\omega||)\)</span></p>
 <p>  这里将最大化<span class="math inline">\(d\)</span>转化为最小化<span class="math inline">\(\omega\)</span>的模。</p>
 <p>  接下来是解决优化问题。</p>
 <h2 id="二次规划quadratic-programming">二次规划(Quadratic Programming)</h2>
@@ -315,8 +315,8 @@
 <h1 id="非线性模型">非线性模型</h1>
 <h2 id="svm如何处理非线性模型">SVM如何处理非线性模型？</h2>
 <p>  根据上面<em>线性模型</em>的推导，可以得出SVM的线性模型是：</p>
-<p><span class="math inline">\(minimize:\)</span> <span class="math inline">\(\frac{1}{2} ||\omega||^2 + c\sum_{i=1}^N\xi_i\)</span>（式1）</p>
-<p><span class="math inline">\(subject{\,} to:\)</span><span class="math inline">\(\left\{\begin{matrix}y_i[\omega^Tx_i + b] \geq 1 - \xi_i (i=1\cdots N) \\ \xi_i \geq 0 \end{matrix}\right.\)</span></p>
+<p><span class="math inline">\(min:\)</span> <span class="math inline">\(\frac{1}{2} ||\omega||^2 + c\sum_{i=1}^N\xi_i\)</span>（式1）</p>
+<p><span class="math inline">\(s.t.\)</span><span class="math inline">\(\left\{\begin{matrix}y_i[\omega^Tx_i + b] \geq 1 - \xi_i (i=1\cdots N) \\ \xi_i \geq 0 \end{matrix}\right.\)</span></p>
 <p>（这里的<span class="math inline">\(c\)</span>也是事先设定的参数，<span class="math inline">\(c\sum_{i=1}^N\xi_i\)</span>为正则项(<span class="math inline">\(Regulation{\,}Term\)</span>)）</p>
 <p>  若<span class="math inline">\(x\)</span>为低维、不可分的数据，经过<span class="math inline">\(x \rightarrow \varphi(x)\)</span>， <span class="math inline">\(\varphi(x)\)</span>为高维数据，那么<span class="math inline">\(\varphi(x)\)</span>可分的概率更高。思考一下，若<span class="math inline">\(\varphi(x)\)</span>是无限维，<span class="math inline">\(\varphi(x)\)</span>线性可分的概率是否会趋向于1？</p>
 <p>  根据<span class="math inline">\(x_i = \varphi(x)\)</span>，此时限制条件可以修改为<span class="math inline">\(y_i[\omega^T\varphi(x) + b] &gt;= 1 - \xi_i\)</span>。</p>
@@ -334,16 +334,16 @@
 <h3 id="原问题与对偶问题">原问题与对偶问题</h3>
 <p><em>原问题（Prime Problem）</em></p>
 <ul>
-<li><p><span class="math inline">\(minimize{\,}:f(\omega)\)</span></p></li>
-<li><p><span class="math inline">\(subject{\,}to: \left\{\begin{matrix}g_i(\omega) \leq 0, i=1\cdots K (K个不等式定义) \\ h_i(\omega) = 0，i=1\cdots M (M个不等式定义)\end{matrix}\right.\)</span></p></li>
+<li><p><span class="math inline">\(min{\,}:f(\omega)\)</span></p></li>
+<li><p><span class="math inline">\(s.t. \left\{\begin{matrix}g_i(\omega) \leq 0, i=1\cdots K (K个不等式定义) \\ h_i(\omega) = 0，i=1\cdots M (M个不等式定义)\end{matrix}\right.\)</span></p></li>
 </ul>
 <p><em>对偶问题(Dual Problem)</em></p>
 <p>1、定义：</p>
 <p><span class="math inline">\(L(\omega, \alpha, \beta) = f(\omega) + \sum_{i=1}^K\alpha_ig_i(\omega)+\sum_{i=1}^M\beta_ih_i(\omega) \\=f(\omega) + \alpha^Tg(\omega) + \beta^Th(\omega)\)</span> (向量形式)</p>
 <p>2、对偶问题定义：</p>
-<p><span class="math inline">\(maximum:{\,}\theta(\alpha, \beta) = inf\left\{\begin{matrix}L(\omega, \alpha,\beta)\end{matrix}\right\}\)</span></p>
+<p><span class="math inline">\(max{\,}\theta(\alpha, \beta) = inf\left\{\begin{matrix}L(\omega, \alpha,\beta)\end{matrix}\right\}\)</span></p>
 <p><span class="math inline">\(inf\)</span>为求最小值，限制<span class="math inline">\(\alpha和\beta\)</span>，遍历所有<span class="math inline">\(\omega\)</span>，使得<span class="math inline">\(L\)</span>最小，取最小的<span class="math inline">\(L\)</span>时的<span class="math inline">\(\omega\)</span>。</p>
-<p><span class="math inline">\(subject{\,}to:\alpha_i \geq 0(i=1\cdots K)\)</span> 或 <span class="math inline">\(\alpha \geq 0\)</span>（向量的每一个分量都大于或等于0）</p>
+<p><span class="math inline">\(s.t. \alpha_i \geq 0(i=1\cdots K)\)</span> 或 <span class="math inline">\(\alpha \geq 0\)</span>（向量的每一个分量都大于或等于0）</p>
 <p><em>原问题与对偶问题的间距</em></p>
 <p><span class="math inline">\(G=f(\omega^*) - \theta(\alpha^*, \beta^*) \geq 0\)</span>，<span class="math inline">\(G\)</span>为原问题与对偶问题的间距(Duality Gap)。 （对于某些问题，可以证明<span class="math inline">\(G=0\)</span>）</p>
 <h3 id="强对偶定理">强对偶定理</h3>
@@ -354,13 +354,13 @@
 <p><span class="math inline">\(\left\{\begin{matrix}\ 或者 \alpha^*_i = 0 \\ 或者 g_i^*(\omega^*) = 0\end{matrix}\right.\)</span></p>
 <h3 id="对偶问题引入svm非线性模型">对偶问题引入SVM非线性模型</h3>
 <h4 id="优化目标">优化目标</h4>
-<p>最小化 <span class="math inline">\(\frac{1}{2}||\omega||^2 + c\sum_{i=1}^N\xi_i\)</span>（首先这是一个凸函数）</p>
-<p>限制条件：<span class="math inline">\(\left\{\begin{matrix}\ y_i[\omega^T\varphi(x)+b] \geq 1 - \xi_i \\ \xi_i \geq 0\end{matrix}\right.\)</span></p>
+<p><span class="math inline">\(min{\,}\frac{1}{2}||\omega||^2 + c\sum_{i=1}^N\xi_i\)</span>（首先这是一个凸函数）</p>
+<p><span class="math inline">\(s.t. \left\{\begin{matrix}\ y_i[\omega^T\varphi(x)+b] \geq 1 - \xi_i \\ \xi_i \geq 0\end{matrix}\right.\)</span></p>
 <h4 id="标准形式">标准形式</h4>
-<p><span class="math inline">\(minimize: \frac{1}{2}||\omega||^2 - c\sum_{i=1}^N\xi_i\)</span></p>
-<p><span class="math inline">\(subject{\,}to :\left\{\begin{matrix}\ 1+\xi_i-y_i\omega^T\varphi(x_i) - y_ib \leq 0 \\ \xi_i \leq 0 (i=1\cdots N)\end{matrix}\right.\)</span></p>
+<p><span class="math inline">\(min{\,}\frac{1}{2}||\omega||^2 - c\sum_{i=1}^N\xi_i\)</span></p>
+<p><span class="math inline">\(s.t. \left\{\begin{matrix}\ 1+\xi_i-y_i\omega^T\varphi(x_i) - y_ib \leq 0 \\ \xi_i \leq 0 (i=1\cdots N)\end{matrix}\right.\)</span></p>
 <h4 id="对偶问题">对偶问题</h4>
-<p><span class="math inline">\(maximum: \theta(\alpha, \beta) = inf\left\{\begin{matrix}\frac{1}{2}||\omega||^2-c\sum_{i=1}^N\xi_i + \sum_{i=1}^N\beta_i\xi_i + \sum_{i=1}^N\alpha_i[1+\xi_i-y_i\omega^T\varphi(x_i)-y_ib]\end{matrix}\right\}\)</span>,对所有的<span class="math inline">\((\omega_i, \xi_i, \beta_i)\)</span></p>
+<p><span class="math inline">\(max{\,} \theta(\alpha, \beta) = inf\left\{\begin{matrix}\frac{1}{2}||\omega||^2-c\sum_{i=1}^N\xi_i + \sum_{i=1}^N\beta_i\xi_i + \sum_{i=1}^N\alpha_i[1+\xi_i-y_i\omega^T\varphi(x_i)-y_ib]\end{matrix}\right\}\)</span>,对所有的<span class="math inline">\((\omega_i, \xi_i, \beta_i)\)</span></p>
 <h4 id="补充">补充</h4>
 <p>1、<span class="math inline">\(\omega\)</span>为一个向量，<span class="math inline">\(\omega=(\omega_1, \omega_2, \cdots, \omega_m)^T, f(\omega)\)</span>为一个数</p>
 <p><span class="math inline">\(\frac{\partial f}{\partial \omega} = (\frac{\partial f}{\partial \omega_1}, \frac{\partial f}{\partial \omega_2}, \cdots, \frac{\partial f}{\partial \omega_m})^T\)</span></p>
@@ -383,8 +383,8 @@
 <p><span class="math inline">\(= -\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\varphi(x_i)^T\varphi(x_j)\)</span></p>
 <p><span class="math inline">\(= -\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
 <h3 id="结论">结论</h3>
-<p>最大化：<span class="math inline">\(\theta(\alpha, \beta) = \sum_{i=1}^N\alpha_i - \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
-<p>限制条件：<span class="math inline">\(\left\{\begin{matrix}\ 0 \leq \alpha_i \leq c \\ \sum_{i=1}^N\alpha_iy_i=0 \end{matrix}\right.\)</span></p>
+<p><span class="math inline">\(max{\,} \theta(\alpha, \beta) = \sum_{i=1}^N\alpha_i - \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j)\)</span></p>
+<p><span class="math inline">\(s.t. \left\{\begin{matrix}\ 0 \leq \alpha_i \leq c \\ \sum_{i=1}^N\alpha_iy_i=0 \end{matrix}\right.\)</span></p>
 <p><span class="math inline">\(KKT\)</span>条件：<span class="math inline">\(\forall i=1 \cdots K, \alpha_i^*=0或g_i^*(\omega^*) = 0\)</span></p>
 <p>解法：<span class="math inline">\(SMO\)</span>算法</p>
 <h3 id="参数求解">参数求解</h3>
