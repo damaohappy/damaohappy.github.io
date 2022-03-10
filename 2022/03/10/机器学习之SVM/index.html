@@ -24,7 +24,7 @@
 <meta property="og:description" content="写在前面 \(Support{\,}Vector{\,}Machine\)（SVM,支持向量机）是机器学习中的算法，通常用于分类问题。 线性模型 假定在一个平面内，能够用一条直线将正负样本分开，那么就称为线性可分（\(Liner{\,} Sepratable\)）。否则就是线性不可分。 问题 显然有很多直线可以区分，那么如何衡量哪条直线更好？ 性能指标 1、将直线平移到一类样本的最近，得到L1 2">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-09T16:36:33.000Z">
-<meta property="article:modified_time" content="2022-03-09T16:53:12.071Z">
+<meta property="article:modified_time" content="2022-03-10T01:19:25.677Z">
 <meta property="article:author" content="一口羊宝wu">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="SVM">
@@ -269,6 +269,7 @@
 <p><span class="math inline">\(\exists (\omega, b)\)</span>，使得对<span class="math inline">\(\forall i=1\cdots N\)</span>，有:</p>
 <p><span class="math inline">\(\left\{\begin{aligned} \omega^Tx_i + b \geq 0,y_i = + 1\\ \omega^Tx_i + b \leq 0,y_i = -1 \end{aligned}\right.\)</span></p>
 <p>即：<span class="math inline">\(y_i[\omega^Tx_i + b] \geq 0\)</span></p>
+<p>其他：用凸包定义。</p>
 <h2 id="机器学习步骤">机器学习步骤</h2>
 <h3 id="step1">Step1</h3>
 <p>限定模型。用一个方程。</p>
@@ -396,7 +397,7 @@
 <p><span class="math inline">\(Linear\)</span>（线性内核）：<span class="math inline">\(K(x, y) = x^Ty\)</span>（等于不用核函数）</p>
 <p><span class="math inline">\(Poly\)</span>（多项式核）：<span class="math inline">\(K(x, y) = (x^Ty + 1)^d\)</span>（可以写出<span class="math inline">\(\varphi(x)\)</span>）</p>
 <p><span class="math inline">\(Rbf\)</span>（高斯径向基函数核）：<span class="math inline">\(K(x, y) = e^-\frac{||x-y||^2}{\sigma^2}\)</span></p>
-<p><span class="math inline">\(Tanh核\)</span>：<span class="math inline">\(K(x, y) = tanh(\beta x^Ty + b), tanh=\frac{e^x - e^-x}{e^x + e^-x}\)</span></p>
+<p><span class="math inline">\(Tanh核\)</span>：<span class="math inline">\(K(x, y) = tanh(\beta x^Ty + b), tanh=\frac{e^x - e^{-x}}{e^x + e^{-x}}\)</span></p>
 
             </div>
             <hr>
