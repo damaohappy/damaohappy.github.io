@@ -24,7 +24,7 @@
 <meta property="og:description" content="写在前面   \(Support{\,}Vector{\,}Machine\)（SVM,支持向量机）是机器学习中的算法，通常用于分类问题（Classification）。 线性模型 假定在一个平面内，能够用一条直线将正负样本分开，那么就称为线性可分（\(Liner{\,} Sepratable\)）。否则就是线性不可分。 问题 显然有很多直线可以区分，那么如何衡量哪条直线更好？ 性能指标 1、将直">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-09T16:36:33.000Z">
-<meta property="article:modified_time" content="2022-03-10T14:53:07.952Z">
+<meta property="article:modified_time" content="2022-03-10T14:55:01.680Z">
 <meta property="article:author" content="一口羊宝wu">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="SVM">
@@ -333,10 +333,8 @@
 <p>  在优化问题中，如果<em>原问题</em>不容易解，通常可以转化为<em>对偶问题</em></p>
 <h3 id="原问题与对偶问题">原问题与对偶问题</h3>
 <p><em>原问题（Prime Problem）</em></p>
-<ul>
-<li><p><span class="math inline">\(min{\,}:f(\omega)\)</span></p></li>
-<li><p><span class="math inline">\(s.t. \left\{\begin{matrix}g_i(\omega) \leq 0, i=1\cdots K (K个不等式定义) \\ h_i(\omega) = 0，i=1\cdots M (M个不等式定义)\end{matrix}\right.\)</span></p></li>
-</ul>
+<p><span class="math inline">\(min{\,}:f(\omega)\)</span></p>
+<p><span class="math inline">\(s.t. \left\{\begin{matrix}g_i(\omega) \leq 0, i=1\cdots K (K个不等式定义) \\ h_i(\omega) = 0，i=1\cdots M (M个不等式定义)\end{matrix}\right.\)</span></p>
 <p><em>对偶问题(Dual Problem)</em></p>
 <p>1、定义：</p>
 <p><span class="math inline">\(L(\omega, \alpha, \beta) = f(\omega) + \sum_{i=1}^K\alpha_ig_i(\omega)+\sum_{i=1}^M\beta_ih_i(\omega) \\=f(\omega) + \alpha^Tg(\omega) + \beta^Th(\omega)\)</span> (向量形式)</p>
