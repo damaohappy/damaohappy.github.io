@@ -16,15 +16,15 @@
   <meta name="author" content="一口羊宝wu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="写在前面   学习过数据结构的同学，也许会好奇标准库里的实现。当你真的去看源码的时候，你会发现，写STL的大佬确实贼强。待你细细研究之后，若抛开泛型等复杂特性，你会发现其实我们所学的数据结构知识，是能帮助我们理解的。   数组和链表，是我们学过的最基础的数据结构了，它们都属于线性表。我们发现其他的数据结构都可以用数组或者链表进行模拟，栈和队列显然可以，二叉树可以用数组或者二叉链表模拟，还可以用树状">
+    <meta name="description" content="并查集 题目 题目来源：Leetcode-547.Friend Circles 题目难度：Medium 题目描述：There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="高级数据结构">
+<meta property="og:title" content="并查集、Trie、线段树">
 <meta property="og:url" content="http://yangyangu.github.io/2022/03/10/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="小羊的算法笔记">
-<meta property="og:description" content="写在前面   学习过数据结构的同学，也许会好奇标准库里的实现。当你真的去看源码的时候，你会发现，写STL的大佬确实贼强。待你细细研究之后，若抛开泛型等复杂特性，你会发现其实我们所学的数据结构知识，是能帮助我们理解的。   数组和链表，是我们学过的最基础的数据结构了，它们都属于线性表。我们发现其他的数据结构都可以用数组或者链表进行模拟，栈和队列显然可以，二叉树可以用数组或者二叉链表模拟，还可以用树状">
+<meta property="og:description" content="并查集 题目 题目来源：Leetcode-547.Friend Circles 题目难度：Medium 题目描述：There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-10T03:34:55.000Z">
-<meta property="article:modified_time" content="2022-03-10T10:50:42.490Z">
+<meta property="article:modified_time" content="2022-09-17T06:50:00.325Z">
 <meta property="article:author" content="一口羊宝wu">
 <meta property="article:tag" content="并查集">
 <meta property="article:tag" content="线段树">
@@ -32,7 +32,7 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>高级数据结构 - 小羊的算法笔记</title>
+  <title>并查集、Trie、线段树 - 小羊的算法笔记</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -173,12 +173,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('http://storage.live.com/items/FCAC841A81A8B413!2223:/post_4.png?authkey=AFYfA8yxCto8Mzc') no-repeat center center;
+         style="background: url('https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBZ3VxR1M3QlJKUThiVUlINnUzNWhqelNjRDg_ZT14YURIYXM.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="高级数据结构">
+            <span class="h2" id="subtitle" title="并查集、Trie、线段树">
               
             </span>
 
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.5k 字
+      5.2k 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      47 分钟
+      44 分钟
     </span>
   
 
@@ -237,14 +237,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">高级数据结构</h1>
+            <h1 style="display: none">并查集、Trie、线段树</h1>
             
             <div class="markdown-body">
-              <h1 id="写在前面">写在前面</h1>
-<p>  学习过数据结构的同学，也许会好奇标准库里的实现。当你真的去看源码的时候，你会发现，写STL的大佬确实贼强。待你细细研究之后，若抛开泛型等复杂特性，你会发现其实我们所学的数据结构知识，是能帮助我们理解的。</p>
-<p>  数组和链表，是我们学过的最基础的数据结构了，它们都属于线性表。我们发现其他的数据结构都可以用数组或者链表进行模拟，栈和队列显然可以，二叉树可以用数组或者二叉链表模拟，还可以用树状数组来模拟树。至于图，邻接矩阵和邻接表不也是可以用数组链表模拟嘛？（<del>我好像说了一大段废话</del>）</p>
-<p>  所谓高级数据结构，其实现也无非是在这两者的组合。在此并不是想说它们很简单，反之，它们原理虽然不算难，但是却可以解决一些难题，对于一些直观上只能暴力解的问题，运用好高级数据结构可以更高效地解决它们。（<del>算了看题吧</del>）</p>
-<h1 id="并查集">并查集</h1>
+              <h1 id="并查集">并查集</h1>
 <h2 id="题目">题目</h2>
 <p>题目来源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/friend-circles/">Leetcode-547.Friend Circles</a></p>
 <p>题目难度：<strong>Medium</strong></p>
@@ -279,6 +275,7 @@
 <p>  <em>线段树</em>为了加速搜索，使用空间换时间。在每个结点存储下一个字母的地址（这个定义是递归的）。用unordered_map或者数组都可以实现。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">TrieNode</span>&#123;</span><br>    <span class="hljs-keyword">bool</span> isword;<br>    unordered_map&lt;<span class="hljs-keyword">char</span>,TrieNode*&gt;next;<br>    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">TrieNode</span><span class="hljs-params">()</span>:isword(false)&#123;</span><br>    &#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Trie</span> &#123;</span><br><span class="hljs-keyword">private</span>:<br>    TrieNode * root;<br>    <span class="hljs-keyword">int</span> size;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">/** Initialize your data structure here. */</span><br>    <span class="hljs-built_in">Trie</span>() &#123;<br>        root = <span class="hljs-keyword">new</span> <span class="hljs-built_in">TrieNode</span>();<br>        size = <span class="hljs-number">0</span>;<br>    &#125;<br>    <br>    <span class="hljs-comment">/** Inserts a word into the trie. */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(string word)</span> </span>&#123;<br>        <span class="hljs-keyword">auto</span> p = root;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;ch: word)&#123;<br>            <span class="hljs-keyword">if</span>(! p-&gt;next[ch])&#123;<br>                p-&gt;next[ch] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">TrieNode</span>();<br>            &#125;<br>            p = p-&gt;next[ch];<br>        &#125;<br>        p-&gt;isword = <span class="hljs-literal">true</span>;<br>        ++ size;<br>    &#125;<br>    <br>    <span class="hljs-comment">/** Returns if the word is in the trie. */</span><br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(string word)</span> </span>&#123;<br>        <span class="hljs-keyword">auto</span> p = root;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;ch: word)&#123;<br>            <span class="hljs-keyword">if</span>(! p-&gt;next[ch])<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            p = p-&gt;next[ch];<br>        &#125;<br>        <span class="hljs-keyword">return</span> p-&gt;isword;<br>    &#125;<br>    <br>    <span class="hljs-comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span><br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(string prefix)</span> </span>&#123;<br>        <span class="hljs-keyword">auto</span> p = root;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;ch: prefix)&#123;<br>            <span class="hljs-keyword">if</span>(! p-&gt;next[ch])<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            p = p-&gt;next[ch];<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Your Trie object will be instantiated and called as such:</span><br><span class="hljs-comment"> * Trie obj = new Trie();</span><br><span class="hljs-comment"> * obj.insert(word);</span><br><span class="hljs-comment"> * bool param_2 = obj.search(word);</span><br><span class="hljs-comment"> * bool param_3 = obj.startsWith(prefix);</span><br><span class="hljs-comment"> */</span><br></code></pre></div></td></tr></table></figure>
 <h1 id="线段树">线段树</h1>
+<p>// 挖坑待续</p>
 
             </div>
             <hr>
@@ -317,12 +314,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/06/09/%E6%9C%AC%E7%A7%91%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">大学、人生的老话题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
                       <a href="/2022/03/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/">
-                        <span class="hidden-mobile">动态规划简单总结</span>
+                        <span class="hidden-mobile">LeetCode上的DP水题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
